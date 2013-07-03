@@ -1,6 +1,7 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    console.log(request);
-    document.body.innerHTML += "test";
+    jQuery("#lng").text(request.lng);
+    jQuery("#lat").text(request.lat);
+    jQuery("#redraw").trigger("click");
     sendResponse({status: "end"});
 });
 

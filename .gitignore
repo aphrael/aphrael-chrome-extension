@@ -1,2 +1,3 @@
 mock/auth.yml
 package/*.zip
+.sass-cache
