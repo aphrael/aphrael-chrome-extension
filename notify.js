@@ -1,6 +1,5 @@
-(function(window) {
+(function() {
 
-window.Test = {};
 var Aphrael = {};
 
 // タブ切替時のイベント
@@ -22,15 +21,14 @@ chrome.pushMessaging.onMessage.addListener(function(message) {
             // TODO 開発中はlocalhost。
             if (/^http:\/\/localhost.*/.test(tab.url)) {
                 var location = message.payload.split(",");
-
-                // FIXME
-                // たまにPort error: Could not establish connection. Receiving end does not exist. 
-                // になることがあるので原因を究明中。接続を単発じゃなく永続？
-
                 chrome.tabs.executeScript(Aphrael.tabId, {file: "content_script.js"}, function() {
                     var data = {lat: location[0], lng: location[1]};
                     chrome.tabs.sendMessage(Aphrael.tabId, data, function(response) {
-                        console.log(response);
+                        // Responseが取れない場合は接続の確率に失敗しているため、
+                        // タブをリロードする。
+                        if (typeof response === 'undefined') {
+                            chrome.tabs.update(Aphrael.tabId, {url: tab.url});
+                        }
                     });
                 });
             }
@@ -38,4 +36,4 @@ chrome.pushMessaging.onMessage.addListener(function(message) {
     }
 });
 
-})(window);
+})();
