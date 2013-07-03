@@ -18,6 +18,7 @@ chrome.pushMessaging.onMessage.addListener(function(message) {
 
     if (!!GCM.tabId) {
         chrome.tabs.get(GCM.tabId, function(tab) {
+            // TODO 開発中はlocalhost。
             if (/^http:\/\/localhost\/.*/.test(tab.url)) {
                 var location = message.payload.split(",");
                 chrome.tabs.executeScript(GCM.tabId, {file: "content_script.js"}, function() {

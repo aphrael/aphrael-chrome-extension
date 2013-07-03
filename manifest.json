@@ -1,16 +1,15 @@
 {
     "manifest_version": 2,
-    "name": "GCM Test",
-    "description": "It's test extension",
-    "version": "1.0.12",
-
+    "name": "Aphrael",
+    "description": "Aphrael for chrome",
+    "version": "0.0.1",
     "permissions": [
         "pushMessaging",
         "notifications",
         "tabs"
     ],
     "background": {
-        "scripts": ["test.js"]
+        "scripts": ["notify.js"]
     },
     "content_scripts": [
         {
