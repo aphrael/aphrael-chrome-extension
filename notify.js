@@ -1,10 +1,10 @@
 (function(window) {
 
-var GCM = {};
+var Aphrael = {};
 
 // タブ切替時のイベント
 chrome.tabs.onSelectionChanged.addListener(function(tabId) {
-    GCM.tabId = tabId;
+    Aphrael.tabId = tabId;
 });
 
 // ChannelIDを取得
@@ -16,14 +16,14 @@ chrome.pushMessaging.getChannelId(false, function(response){
 chrome.pushMessaging.onMessage.addListener(function(message) {
     if (message.subchannelId !== 0) return;
 
-    if (!!GCM.tabId) {
-        chrome.tabs.get(GCM.tabId, function(tab) {
+    if (!!Aphrael.tabId) {
+        chrome.tabs.get(Aphrael.tabId, function(tab) {
             // TODO 開発中はlocalhost。
             if (/^http:\/\/localhost\/.*/.test(tab.url)) {
                 var location = message.payload.split(",");
-                chrome.tabs.executeScript(GCM.tabId, {file: "content_script.js"}, function() {
+                chrome.tabs.executeScript(Aphrael.tabId, {file: "content_script.js"}, function() {
                     var data = {lat: location[0], lng: location[1]};
-                    chrome.tabs.sendMessage(GCM.tabId, data, function(response) {
+                    chrome.tabs.sendMessage(Aphrael.tabId, data, function(response) {
                         console.log(response);
                     });
                 });
