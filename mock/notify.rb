@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'httpclient'
 require 'json'
 require 'yaml'
@@ -21,14 +22,20 @@ res = client.post(
 
 access_token = JSON.parse(res.body)['access_token']
 
-lng = '139.688662'
-lat = '35.755125'
+pos_list = [
+  {:lng => '139.774219', :lat => '35.698683'}, # 秋葉原駅
+  {:lng => '139.771811', :lat => '35.698779'}, # ボークスあたり
+  {:lng => '139.770352', :lat => '35.699555'}, # K-BOOKSあたり
+  {:lng => '139.771843', :lat => '35.700696'}, # アニメイトあたり
+  {:lng => '139.76797' , :lat => '35.700461'}  # 神田明神あたり  
+]
 
+pos = pos_list[rand(pos_list.length)]
 
 data = {
   :channelId => config["channel_id"],
   :subchannelId => "0",
-  :payload => "#{lat},#{lng}"
+  :payload => "#{pos[:lat]},#{pos[:lng]}"
 }
 
 response = client.post(
