@@ -7,6 +7,35 @@ var Aphrael = {
     tabs: []
 };
 
+// WebSocket接続処理
+var connect = function() {
+    if (!Aphrael.webSocket) {
+        Aphrael.webSocket = new WebSocket("ws://" + Aphrael.host + ":" + Aphrael.port);
+        Aphrael.webSocket.onmessage = function(res) {
+            executeTracking(JSON.parse(res.data));
+        };
+
+        Aphrael.webSocket.onclose = function(ws) {
+            if (!ws.wasClean) {
+                this.close();
+            }
+        };
+
+        Aphrael.webSocket.onerror = function(e) {
+            throw e;
+        };
+    }
+};
+
+// WebSocket切断処理
+var close = function() {
+    if (Aphrael.webSocket) {
+        Aphrael.webSocket.close();
+        Aphrael.webSocket = null;
+    }
+};
+
+// 更新対象のタブIDをセットする
 var updateTabInfo = function() {
     // 全てのWindow情報を取得
     chrome.windows.getAll({populate: true}, function(windowList) {
@@ -21,9 +50,17 @@ var updateTabInfo = function() {
                 }
             });
         });
+
+        // Aphraelのページを全て閉じたらWebSocketをクローズする
+        if (Aphrael.tabs.length === 0) {
+            close();
+        }
+
+        console.log(Aphrael);
     });
 };
 
+// 地図更新処理を実行
 var executeTracking = function(data) {
     Aphrael.tabs.forEach(function(tabId) {
         chrome.tabs.executeScript(tabId, {file: "content_script.js"}, function() {
@@ -39,41 +76,38 @@ var executeTracking = function(data) {
 
 
 // Windowを作成したときのイベント
-chrome.windows.onCreated.addListener(function() {
-    updateTabInfo();
-
-    if (!Aphrael.webSocket) {
-        Aphrael.webSocket = new WebSocket("ws://" + Aphrael.host + ":" + Aphrael.port + "/websocket");
-    }
-
-    Aphrael.webSocket.onmessage = function(res) {
-        executeTracking(JSON.parse(res.data));
-    };
-
-    Aphrael.webSocket.onclose = function(ws) {
-        Aphrael.connections = Aphrael.connections.filter(function(conn) {
-            return conn === ws ? false : true;
-        });
-    };
-
-    Aphrael.webSocket.onerror = function(e) {
-        throw e;
-    };  
-});
-
+chrome.windows.onCreated.addListener(updateTabInfo);
 // ウインドウが削除されたとき
 chrome.windows.onRemoved.addListener(updateTabInfo);
+// タブが削除されたとき
+chrome.tabs.onRemoved.addListener(updateTabInfo);
+
 // タブがウインドウに入ったとき
 chrome.tabs.onAttached.addListener(updateTabInfo);
 // タブがウインドウからでたとき    
 chrome.tabs.onDetached.addListener(updateTabInfo);
 // 選択されているタブが変わったとき
 chrome.tabs.onSelectionChanged.addListener(function(tabId) {
-    //Aphrael.tabId = tabId;
     updateTabInfo();
+    // Aphraelのページを開いたとき
+    Aphrael.tabs.forEach(function(currentTabId) {
+        if (tabId === currentTabId) {
+            // WebScoket接続処理を実行
+            connect();
+        }
+    });
 });
 // タブが更新されたとき
-chrome.tabs.onUpdated.addListener(updateTabInfo);
+chrome.tabs.onUpdated.addListener(function(tabId) {
+    updateTabInfo();
+    // Aphraelのページを開いたとき
+    Aphrael.tabs.forEach(function(currentTabId) {
+        if (tabId === currentTabId) {
+            // WebScoket接続処理を実行
+            connect();
+        }
+    });
+});
 
 
 })();
