@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Aphrael",
     "description": "Aphrael for chrome",
-    "version": "0.0.1",
+    "version": "0.0.5",
     "permissions": [
         "pushMessaging",
         "notifications",
