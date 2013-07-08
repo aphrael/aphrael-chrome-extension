@@ -23,4 +23,12 @@ function drawMap(lat, lng) {
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
+    showHistory(lat, lng);
+}
+
+// 履歴を表示する
+function showHistory(lat, lng) {
+    jQuery("#history").append(
+        jQuery("<div>").html(lng + "/" + lat)
+    );
 }
