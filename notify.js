@@ -126,7 +126,7 @@ var executeTracking = function(data) {
         chrome.tabs.get(tabId, function(tab) {
             sendMessage(tabId, 200, data, function(response) {
                 if (typeof response === 'undefined') {
-                    chrome.tabs.update(tabId, {url: tab.url});
+                   chrome.tabs.update(tabId, {url: tab.url});
                 }
             });
         });
@@ -155,7 +155,7 @@ var inArray = function(elem, array) {
  */
 var isAllowedHost = function(url) {
     for (var i = 0; i < ALLOWED_HOST.length; i++) {
-        if (url.indexOf("://" + host, 0) !== -1) {
+        if (url.indexOf("://" + ALLOWED_HOST[i], 0) !== -1) {
             return true;
         }
     }
