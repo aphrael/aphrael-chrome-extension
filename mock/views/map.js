@@ -9,8 +9,11 @@ jQuery(function() {
 
 // 指定した位置に移動する
 function moveMap() {
-    var latlng = new google.maps.LatLng(jQuery("#lat").html(), jQuery("#lng").html());
+    var lat = jQuery("#lat").html(),
+        lng = jQuery("#lng").html();
+    var latlng = new google.maps.LatLng(lat, lng);
     window.__MAP__.panTo(latlng);
+    showHistory(lat, lng);
 }
 
 // 地図を描画する
@@ -23,7 +26,6 @@ function drawMap(lat, lng) {
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
-    showHistory(lat, lng);
 }
 
 // 履歴を表示する
