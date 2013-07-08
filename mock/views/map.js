@@ -4,7 +4,7 @@ jQuery(function() {
     google.maps.event.addDomListener(window, 'load', function() {
         drawMap("35.643746", "139.826238");
     });
-    jQuery("#redraw").on("click", moveMap);
+    jQuery("#move").on("click", moveMap);
 });
 
 // 指定した位置に移動する
