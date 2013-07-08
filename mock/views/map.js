@@ -9,8 +9,8 @@ jQuery(function() {
 
 // 指定した位置に移動する
 function moveMap() {
-    var lat = jQuery("#lat").html(),
-        lng = jQuery("#lng").html();
+    var lat = jQuery("#__lat__").html(),
+        lng = jQuery("#__lng__").html();
     var latlng = new google.maps.LatLng(lat, lng);
     window.__MAP__.panTo(latlng);
     showHistory(lat, lng);
