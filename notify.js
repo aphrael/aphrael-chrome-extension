@@ -8,6 +8,12 @@ var Aphrael = {
     tabs: []
 };
 
+// Extensionの実行を許可するホスト名
+var ALLOWED_HOST = [
+    'localhost',
+    'aphrael-chrome-extension.herokuapp.com'
+];
+
 /**
  * WebSocket接続処理
  */
@@ -98,8 +104,7 @@ var updateTabInfo = function() {
             var tabs = windowInfo.tabs;
             // 全てのタブをチェックし、Aphraelを適用するタブ情報を保持する
             tabs.forEach(function(tab) {
-                // FIXME 適用するURLを外出しにして正規表現をコンパイルする
-                if (/^http:\/\/(?:aphrael-chrome-extension\.herokuapp\.com|localhost).*/.test(tab.url)) {
+                if (isAllowedHost(tab.url)) {
                     Aphrael.tabs.push(tab.id);
                 }
             });
@@ -141,6 +146,20 @@ var inArray = function(elem, array) {
         }
     }
     return -1;
+};
+
+/**
+ * タブ更新されたときの処理
+ * @param {String} url タブのURL
+ * @return {Boolean} 実行許可されたホストかどうか
+ */
+var isAllowedHost = function(url) {
+    for (var i = 0; i < ALLOWED_HOST.length; i++) {
+        if (url.indexOf("://" + host, 0) !== -1) {
+            return true;
+        }
+    }
+    return false;
 };
 
 /**
