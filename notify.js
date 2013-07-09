@@ -1,4 +1,13 @@
 (function() {
+/**
+ * notify.js
+ * version: 0.0.7 (2013/07/09)
+ *
+ * Licensed under the MIT:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+ * Copyright 2013, Ryuichi TANAKA [mapserver2007@gmail.com]
+ */
 
 var Aphrael = {
     host: 'localhost',
@@ -18,6 +27,8 @@ var ALLOWED_HOST = [
  * WebSocket接続処理
  */
 var connect = function() {
+    var ttt = new AphraelStorage();
+
     if (Aphrael.webSocket) return;
     Aphrael.webSocket = new WebSocket("ws://" + Aphrael.host + ":" + Aphrael.port);
 

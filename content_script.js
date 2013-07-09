@@ -6,12 +6,12 @@
 var embedData = function(lng, lat) {
     if (!jQuery("#__lng__").get(0)) {
         jQuery(document.body).append(
-            jQuery("<div>").attr({id: "__lng__"})
+            jQuery("<div>").attr({id: "__lng__"}).addClass("hidden")
         );
     }
     if (!jQuery("#__lat__").get(0)) {
         jQuery(document.body).append(
-            jQuery("<div>").attr({id: "__lat__"})
+            jQuery("<div>").attr({id: "__lat__"}).addClass("hidden")
         );
     }
     jQuery("#__lng__").text(lng);

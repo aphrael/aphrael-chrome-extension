@@ -2,14 +2,13 @@
     "manifest_version": 2,
     "name": "Aphrael",
     "description": "Aphrael for chrome",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "permissions": [
         "pushMessaging",
-        "notifications",
         "tabs"
     ],
     "background": {
-        "scripts": ["notify.js"]
+        "scripts": ["notify.js", "storage.js"]
     },
     "content_scripts": [
         {

@@ -2,8 +2,8 @@
 require 'json'
 WORKSPACE = File.dirname(__FILE__)
 EXTENSION_DIR = '"/Users/stay/Library/Application Support/Google/Chrome/Default/Extensions/hbiimpcojcgioiffkpanhadpgkgkjnic"'
-DEPLOY_FILES = ['notify.js', 'content_script.js']
-RELEASE_FILES = ['notify.js', 'content_script.js', 'jquery.min.js', 'manifest.json']
+DEPLOY_FILES = ['notify.js', 'content_script.js', 'storage.js']
+RELEASE_FILES = ['notify.js', 'content_script.js', 'storage.js', 'jquery.min.js', 'manifest.json']
 @@version = nil
 
 task:default => :deploy
