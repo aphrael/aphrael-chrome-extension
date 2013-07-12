@@ -24,8 +24,6 @@ var ALLOWED_HOST = [
     'sparhawk-web-server.herokuapp.com'
 ];
 
-Aphrael.storage = new AphraelStorage();
-
 /**
  * WebSocket接続処理
  */
