@@ -11,6 +11,7 @@
 
 var Aphrael = {
     host: 'sparhawk-websocket-server.c.node-ninja.com',
+    //host: 'localhost',
     port: '9224',
     webSocket: null,
     manager: null,
