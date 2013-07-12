@@ -11,24 +11,25 @@
 
 var Aphrael = {
     host: 'localhost',
-    port: '9222',
+    port: '9224',
     webSocket: null,
     manager: null,
-    tabs: []
+    tabs: [],
+    storage: null
 };
 
 // Extensionの実行を許可するホスト名
 var ALLOWED_HOST = [
     'localhost',
-    'aphrael-chrome-extension.herokuapp.com'
+    'sparhawk-web-server.herokuapp.com'
 ];
+
+Aphrael.storage = new AphraelStorage();
 
 /**
  * WebSocket接続処理
  */
 var connect = function() {
-    var ttt = new AphraelStorage();
-
     if (Aphrael.webSocket) return;
     Aphrael.webSocket = new WebSocket("ws://" + Aphrael.host + ":" + Aphrael.port);
 

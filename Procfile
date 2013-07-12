@@ -1,1 +1,0 @@
-web: shotgun mock/server.rb -p $PORT -o 0.0.0.0
