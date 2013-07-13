@@ -98,10 +98,8 @@ var showMessage = function(tabId, message) {
  * @param {Function} callback 送信実行後のコールバック
  */
 var sendMessage = function(tabId, status, data, callback) {
-    chrome.tabs.executeScript(tabId, {file: "content_script.js"}, function() {
-        data.status = status;
-        chrome.tabs.sendMessage(tabId, data, callback);
-    });
+    data.status = status;
+    chrome.tabs.sendMessage(tabId, data, callback);
 };
 
 /**
